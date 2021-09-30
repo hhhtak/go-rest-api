@@ -41,7 +41,11 @@ func returnSingleArticles(w http.ResponseWriter, r *http.Request) {
 
 func createNewArticle(w http.ResponseWriter, r *http.Request) {
 	requestBody, _ := ioutil.ReadAll(r.Body)
-	fmt.Fprintf(w, "%+v", string(requestBody))
+	var article Article
+	json.Unmarshal(requestBody, &article)
+
+	Articles = append(Articles, article)
+	json.NewEncoder(w).Encode(article)
 }
 
 func handleRequests()  {
